@@ -128,7 +128,7 @@ class main(zelda.Zelda, nivel_1.nivel1):
                 if activar_sonido == 0:
                     activar_sonido =1
                 if activar_sonido == 1:
-                    pygame.mixer.music.load("sound/winner.wav")
+                    pygame.mixer.music.load("sound/winner.mp3")
                     pygame.mixer.music.play()
                     activar_sonido = 2
 

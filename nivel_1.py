@@ -10,8 +10,8 @@ class nivel1(zelda.Zelda):
 
         # Iniciamos el sonido de fondo
         pygame.mixer.init()
-        pygame.mixer.music.load("sound/fondo.wav")
-        pygame.mixer.music.play()
+        pygame.mixer.music.load("sound/fondo.mp3")
+        pygame.mixer.music.play(-1)
 
         # Este rectangulo es para la colicion con el suelo del nivel
         self.terrenos = []
