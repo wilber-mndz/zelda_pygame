@@ -8,11 +8,20 @@ class nivel1(zelda.Zelda):
     def __init__(self):
         zelda.Zelda.__init__(self)
 
+        # Iniciamos el sonido de fondo
+        pygame.mixer.init()
+        pygame.mixer.music.load("sound/fondo.wav")
+        pygame.mixer.music.play()
+
         # Este rectangulo es para la colicion con el suelo del nivel
         self.terrenos = []
         self.terrenos.append(pygame.Rect(0,530,1330,70))
         self.terrenos.append(pygame.Rect(1470,530,560,70))
         self.terrenos.append(pygame.Rect(2520,530,910,70))
+
+        #Plataformas
+        self.terrenos.append(pygame.Rect(1540, 230, 350, 20))
+        self.terrenos.append(pygame.Rect(2100, 230, 490, 20))
 
         #Almacenara los rectangulos para colicion de las cajas
 
@@ -27,6 +36,7 @@ class nivel1(zelda.Zelda):
         self.cajas.append(pygame.Rect(2240, 390, 70, 70))
         self.cajas.append(pygame.Rect(2380, 390, 70, 70))
         self.cajas.append(pygame.Rect(2450, 390, 70, 70))
+
 
         self.espinas = []
         self.espinas.append(pygame.Rect(985, 499 ,57 ,33))
@@ -60,6 +70,37 @@ class nivel1(zelda.Zelda):
         self.pos_monedas[5] = (1500,480)
         self.pos_monedas[6] = (1780,480)
         self.pos_monedas[7] = (1870,480)
+        self.pos_monedas[8] = (2100,130)
+        self.pos_monedas[9] = (2150,130)
+        self.pos_monedas[10] = (2200,130)
+        self.pos_monedas[11] = (2250,130)
+        self.pos_monedas[12] = (2300,130)
+        self.pos_monedas[13] = (2350,130)
+        self.pos_monedas[14] = (2400,130)
+        self.pos_monedas[15] = (2450,130)
+        self.pos_monedas[16] = (2500,130)
+        self.pos_monedas[17] = (2550,130)
+        self.pos_monedas[18] = (1550,130)
+        self.pos_monedas[19] = (1600,130)
+        self.pos_monedas[20] = (1650,130)
+        self.pos_monedas[21] = (1700,130)
+        self.pos_monedas[22] = (1750,130)
+        self.pos_monedas[23] = (1800,130)
+        self.pos_monedas[24] = (1850,130)
+
+        # controlara la velocidad de animacion de las monedas
+
+
+        self.estado_monedas = []
+        self.monedas_rec = []
+
+        for k in self.pos_monedas:
+            self.estado_monedas.append(True)
+            x = self.pos_monedas[k][0]
+            y = self.pos_monedas[k][1]
+            self.monedas_rec.append(pygame.Rect(x,y,32,32))
+
+        self.v_m = len(self.monedas_rec)
 
     def dibujar_elementos(self, superficie):
         for caja in self.cajas:
@@ -70,6 +111,9 @@ class nivel1(zelda.Zelda):
 
         for espina in self.espinas:
             pygame.draw.rect(superficie, (244, 40, 40), espina)
+
+        for moneda in self.monedas_rec:
+            pygame.draw.rect(superficie, (217, 227, 30), moneda)
 
     def mover_elementos(self, direccion):
         if direccion == "derecha":
@@ -84,6 +128,8 @@ class nivel1(zelda.Zelda):
             # Movemos las espinas
             for espina in self.espinas:
                 espina.left -= self.zelda_v
+            for moneda in self.monedas_rec:
+                moneda.left -= self.zelda_v
 
         if direccion == "izquierda":
 
@@ -96,6 +142,8 @@ class nivel1(zelda.Zelda):
                 terreno.left += self.zelda_v
             for espina in self.espinas:
                 espina.left += self.zelda_v
+            for moneda in self.monedas_rec:
+                moneda.left += self.zelda_v
 
     def detectar_colision(self):
         # Detectamos la colicion con el terreno
@@ -154,27 +202,38 @@ class nivel1(zelda.Zelda):
                 # self.col_derecha = False
                 # self.col_izquierda = False
 
+        i = 0 # indice de la moneda
+        for moneda in self.monedas_rec:
+            if self.zelda_rect.colliderect(moneda) and self.estado_monedas[i] == True:
+                self.estado_monedas[i] = False # Al colicionar la moneda se inactiva
+                self.zelda_monedas +=1
+                sonido = pygame.mixer.Sound("sound/Coin01.wav")
+                sonido.play()
+            i +=1
 
-    def monedas (self,superficie, m_x_y):
+
+    def monedas (self,superficie, m_x_y, i):
 
         """Actualiza los sprite que generan el movimiento de zelda
         cuando camine hacia la derecha"""
 
-        if self.con_mon == (len(self.pos_monedas) *10) * 1:
+        if self.con_mon == (self.v_m *10) * 1:
             self.j = 0
-        if self.con_mon == (len(self.pos_monedas) *10) * 2:
+        if self.con_mon == (self.v_m *10) * 2:
             self.j = 1
-        if self.con_mon == (len(self.pos_monedas) *10) * 3:
+        if self.con_mon == (self.v_m *10) * 3:
             self.j = 2
-        if self.con_mon == (len(self.pos_monedas) *10) * 4:
+        if self.con_mon >= (self.v_m *10) * 4:
             self.j = 3
             self.con_mon = 0
 
         self.con_mon += 1
 
-        self.moneda = pygame.transform.scale2x(self.monedas_sheet.subsurface(self.monedas_n[self.j]))
-        superficie.blit(self.moneda, (m_x_y[0] + self.mX ,m_x_y[1] + self.mY))
+        if self.estado_monedas[i] == True: # Dibujamos la moneda solo si esta activa
+            self.moneda = pygame.transform.scale2x(self.monedas_sheet.subsurface(self.monedas_n[self.j]))
+            superficie.blit(self.moneda, (m_x_y[0] + self.mX ,m_x_y[1] + self.mY))
 
     def dibujar_monedas (self, superficie):
         for i in self.pos_monedas:
-            self.monedas(superficie, self.pos_monedas[i])
+            self.monedas(superficie, self.pos_monedas[i], i)
+                # self.con_mon = 0

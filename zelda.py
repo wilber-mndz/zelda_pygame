@@ -5,7 +5,6 @@ from pygame.locals import *
 class Zelda():
 
     def __init__(self):
-
         """ Iniciamos todas nuestras variables y definimos nuestros sprite """
 
         # icono corazon
@@ -54,8 +53,6 @@ class Zelda():
         self.zelda_sprite_n[17] = (243,267,52,50)
         self.zelda_sprite_n[18] = (301,268,44,50)
 
-
-
         """ Variables para el movimiento del personaje"""
         # Contador que nos ayudara a movernos por los diferentes sprite
         self.contador = 7
@@ -97,6 +94,11 @@ class Zelda():
 
         """Variables de salud puntos y hub"""
         self.salud_zelda = 3
+        self.zelda_monedas = 0
+        self.zelda_vidas = 3
+        self.zelda_estado = True # Indica que esta con vida
+
+
 
     def derecha(self, superficie):
 
@@ -266,8 +268,8 @@ class Zelda():
         """  Estos son los eventos que se activan por teclado. """
         self.teclado = pygame.key.get_pressed() # Capturamos las teclas precionadas
 
-        # Movimiento a la derecha
         if self.teclado[K_RIGHT]:
+
             if self.parabolico == False:
                 self.derecha(superficie)
             elif self.salto == False:
@@ -327,11 +329,11 @@ class Zelda():
 
         # Dibujamos a zelda por defecto
         elif self.en_suelo == True:
-
             self.normal(superficie)
 
         if self.teclado[K_b]:
             self.herida(superficie)
+
         """ Estos son los eventos que se activan al levantar una tecla"""
         if evento.type == KEYUP:
 
@@ -341,6 +343,8 @@ class Zelda():
 
             if evento.key == K_RIGHT:
                 self.col_derecha = False
+                en_reproduccion = False
+                activar_sonido = False
 
             if evento.key == K_LEFT:
                 self.col_izquierda = False
@@ -427,7 +431,24 @@ class Zelda():
     # Funcion principal de zelda
     def zelda(self, superficie, evento):
 
+        # Verificamos si zelda tiene salud
+        if self.salud_zelda == 0:
+            self.zelda_estado = False
+
+        if self.zY > 700:
+            self.zelda_estado = False
+
+        activar_sonido = 0
+
         if self.z_herida == True:
+
+            if activar_sonido == 0:
+                activar_sonido = 1
+            if activar_sonido == 1:
+                sonido = pygame.mixer.Sound("sound/hit03.wav")
+                sonido.play()
+                activar_sonido = 2
+
             self.herida(superficie)
             if self.dir_der == True:
                 self.zX -= 2
@@ -439,6 +460,7 @@ class Zelda():
             if self.con_danio == 7:
                 self.salud_zelda -= 1
                 self.z_herida = False
+                activar_sonido = 0
 
 
         if self.z_herida == False:
@@ -447,6 +469,21 @@ class Zelda():
         self.dibujar_hub(superficie)
 
     def dibujar_hub(self, superficie):
+        """Dibujamos el contador de monedas"""
+        # Cargamos nuestra fuente personalizada
+        self.fuente = pygame.font.Font("font/Pangolin-Regular.ttf", 30)
+        # Generamos nuestro texto con el numero de monedas
+        numero_monedas = self.fuente.render("x" + str(self.zelda_monedas), 0 , (0, 0, 0))
+        superficie.blit(numero_monedas, (250,30)) # Dibujamos nuestro texto
+        # Cargamos nuestro sprite de moneda
+        moneda_icon = pygame.image.load("imagenes/coins.png")
+        fondo_sprite = self.monedas_sheet.get_at((0,0))
+        moneda_icon.set_colorkey(fondo_sprite, RLEACCEL)
+        moneda_icon = pygame.transform.scale2x(self.monedas_sheet.subsurface(0,0, 16, 16))
+        superficie.blit(moneda_icon, (200,33))
+
+
+        """ Dibujamos el indicador de salud"""
         corazonX = 25
         for i in range(0,self.salud_zelda):
             superficie.blit(self.corazon, (corazonX, 25))
@@ -455,3 +492,9 @@ class Zelda():
         for i in range(self.salud_zelda,3):
             superficie.blit(self.corazon_vacio, (corazonX, 25))
             corazonX += 25
+
+        """Dibujamos el indicador vidas"""
+        vidas = pygame.image.load("imagenes/vidas.jpg")
+        superficie.blit(vidas, (350, 33))
+        numero_vidas = self.fuente.render("x" + str(self.zelda_vidas), 0 , (0, 0, 0))
+        superficie.blit(numero_vidas, (400, 30))

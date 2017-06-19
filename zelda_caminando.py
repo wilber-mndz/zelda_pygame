@@ -27,13 +27,14 @@ class main(zelda.Zelda, nivel_1.nivel1):
         nX = 0
         fX = 0
 
+        muertes = 0
+
         # Bucle principal del juego
         while True:
             # Establecemos cuantos fotogramas por segundo queremos mostrar
             time = reloj.tick(60)
             ventana.fill((44, 176, 194))
 
-            # self.dibujar_elementos(ventana)
 
             for evento in pygame.event.get():
                 if evento.type == QUIT:
@@ -48,6 +49,7 @@ class main(zelda.Zelda, nivel_1.nivel1):
             self.detectar_colision()
 
             self.dibujar_monedas(ventana)
+            # self.dibujar_elementos(ventana)
 
             if self.teclado[K_ESCAPE]:
                 pygame.quit()
@@ -62,5 +64,13 @@ class main(zelda.Zelda, nivel_1.nivel1):
                 fX += 1
                 self.mover_elementos("izquierda")
             pygame.display.update()
+
+            if self.zelda_estado == False:
+                zelda.Zelda.__init__(self)
+                nivel_1.nivel1.__init__(self)
+                nX = 0
+                fX = 0
+                muertes += 1
+                self.zelda_vidas -= muertes
 
 main()
