@@ -97,6 +97,7 @@ class Zelda():
         self.zelda_monedas = 0
         self.zelda_vidas = 3
         self.zelda_estado = True # Indica que esta con vida
+        self.zelda_game_over = False
 
 
 
@@ -498,3 +499,6 @@ class Zelda():
         superficie.blit(vidas, (350, 33))
         numero_vidas = self.fuente.render("x" + str(self.zelda_vidas), 0 , (0, 0, 0))
         superficie.blit(numero_vidas, (400, 30))
+        fuente2 = pygame.font.Font(None, 30)
+        indicaciones = fuente2.render("Recoge las 50 monedas y llega hasta el final",0,(0,0,0))
+        superficie.blit(indicaciones, (525,37))

@@ -17,11 +17,25 @@ class nivel1(zelda.Zelda):
         self.terrenos = []
         self.terrenos.append(pygame.Rect(0,530,1330,70))
         self.terrenos.append(pygame.Rect(1470,530,560,70))
-        self.terrenos.append(pygame.Rect(2520,530,910,70))
+        self.terrenos.append(pygame.Rect(2520,530,980,70))
+        self.terrenos.append(pygame.Rect(2520,530,980,70))
+        self.terrenos.append(pygame.Rect(3920,530,70,70))
+        self.terrenos.append(pygame.Rect(4480,530,840,70))
 
         #Plataformas
+        self.terrenos.append(pygame.Rect(210, 390, 210, 20))
+        self.terrenos.append(pygame.Rect(420, 250, 210, 20))
+        self.terrenos.append(pygame.Rect(770, 160, 140, 20))
+        self.terrenos.append(pygame.Rect(1120, 160, 140, 20))
         self.terrenos.append(pygame.Rect(1540, 230, 350, 20))
+        self.terrenos.append(pygame.Rect(1610, 390, 210, 20))
         self.terrenos.append(pygame.Rect(2100, 230, 490, 20))
+        self.terrenos.append(pygame.Rect(3150, 320, 350, 20))
+        self.terrenos.append(pygame.Rect(3570, 460, 350, 20))
+        self.terrenos.append(pygame.Rect(2870, 90, 280, 20))
+        self.terrenos.append(pygame.Rect(3500, 110, 420, 20))
+        self.terrenos.append(pygame.Rect(4340, 320, 420, 20))
+        self.terrenos.append(pygame.Rect(4830, 390, 210, 20))
 
         #Almacenara los rectangulos para colicion de las cajas
 
@@ -33,14 +47,22 @@ class nivel1(zelda.Zelda):
         self.cajas.append(pygame.Rect(560, 390, 70, 70))
         self.cajas.append(pygame.Rect(1960, 460, 70, 70))
         self.cajas.append(pygame.Rect(2170, 390, 70, 70))
-        self.cajas.append(pygame.Rect(2240, 390, 70, 70))
+        # self.cajas.append(pygame.Rect(2240, 390, 70, 70))
         self.cajas.append(pygame.Rect(2380, 390, 70, 70))
         self.cajas.append(pygame.Rect(2450, 390, 70, 70))
+        self.cajas.append(pygame.Rect(3150, 250, 70, 70))
+        self.cajas.append(pygame.Rect(3150, 180, 70, 70))
+        self.cajas.append(pygame.Rect(3850, 390, 70, 70))
+        self.cajas.append(pygame.Rect(5250, 0, 70*5, 70*9))
 
 
         self.espinas = []
         self.espinas.append(pygame.Rect(985, 499 ,57 ,33))
         self.espinas.append(pygame.Rect(1685, 499 ,57 ,33))
+        self.espinas.append(pygame.Rect(3230, 499 ,57 ,33))
+        self.espinas.append(pygame.Rect(3430, 499 ,57 ,33))
+        self.espinas.append(pygame.Rect(3655, 80 ,105 ,33))
+        self.espinas.append(pygame.Rect(4330, 285 ,47 ,33))
 
         # Importamos el archivo para nuestras monedas
         self.monedas_sheet = pygame.image.load("imagenes/coins.png")
@@ -87,6 +109,32 @@ class nivel1(zelda.Zelda):
         self.pos_monedas[22] = (1750,130)
         self.pos_monedas[23] = (1800,130)
         self.pos_monedas[24] = (1850,130)
+        self.pos_monedas[25] = (2850,480)
+        self.pos_monedas[26] = (2900,480)
+        self.pos_monedas[27] = (2950,480)
+        self.pos_monedas[28] = (3000,480)
+        self.pos_monedas[29] = (3050,480)
+        self.pos_monedas[30] = (2850,30)
+        self.pos_monedas[31] = (2900,30)
+        self.pos_monedas[32] = (2950,30)
+        self.pos_monedas[33] = (3000,30)
+        self.pos_monedas[34] = (3050,30)
+        self.pos_monedas[35] = (3100,30)
+        self.pos_monedas[36] = (3150,30)
+        self.pos_monedas[37] = (3315,480)
+        self.pos_monedas[38] = (3365,480)
+        self.pos_monedas[39] = (3940,480)
+        self.pos_monedas[40] = (4050, 2)
+        self.pos_monedas[41] = (4150, 2)
+        self.pos_monedas[42] = (4250, 50)
+        self.pos_monedas[43] = (3650, 360)
+        self.pos_monedas[44] = (3750, 360)
+        self.pos_monedas[45] = (4500, 280)
+        self.pos_monedas[46] = (4600, 280)
+        self.pos_monedas[47] = (4500, 480)
+        self.pos_monedas[48] = (820, 100)
+        self.pos_monedas[49] = (1150, 100)
+
 
         # controlara la velocidad de animacion de las monedas
 
