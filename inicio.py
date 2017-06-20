@@ -3,12 +3,14 @@ import sys
 from pygame.locals import *
 import zelda
 import nivel_1
+import enemigos
 
-class main(zelda.Zelda, nivel_1.nivel1):
+class main(zelda.Zelda, nivel_1.nivel1, enemigos.enemigos):
 
     def __init__(self):
         zelda.Zelda.__init__(self)
         nivel_1.nivel1.__init__(self)
+        enemigos.enemigos.__init__(self)
         ancho = 1024
         alto = 600
 
@@ -30,6 +32,7 @@ class main(zelda.Zelda, nivel_1.nivel1):
 
         nX = 0
         fX = 0
+        enemigosX = 0
 
         muertes = 0
         activar_sonido = 0 # Variable que nos ayuda a activar el sonido de game over
@@ -63,6 +66,8 @@ class main(zelda.Zelda, nivel_1.nivel1):
                 self.dibujar_monedas(ventana)
                 # Muestra los rectangulos de coliciones
                 # self.dibujar_elementos(ventana)
+                # Acticamos los enemigos
+                self.comportamiento_enemigo(ventana, enemigosX)
 
 
             """Capturamos eventos de teclado"""
@@ -75,10 +80,12 @@ class main(zelda.Zelda, nivel_1.nivel1):
             if self.zX >= self.zX_M and self.teclado[K_RIGHT] and self.col_derecha == False and self.z_herida == False:
                 nX -= self.zelda_v
                 fX -= 1
+                enemigosX -= self.zelda_v
                 self.mover_elementos("derecha")
             if self.zX <= self.zX_m and self.teclado[K_LEFT] and fX != 0 and self.col_izquierda == False and self.z_herida == False:
                 nX += self.zelda_v
                 fX += 1
+                enemigosX += self.zelda_v
                 self.mover_elementos("izquierda")
 
             """ Muertes, game over y victoria"""
@@ -86,8 +93,10 @@ class main(zelda.Zelda, nivel_1.nivel1):
             if self.zelda_estado == False:
                 zelda.Zelda.__init__(self)
                 nivel_1.nivel1.__init__(self)
+                enemigos.enemigos.__init__(self)
                 nX = 0
                 fX = 0
+                enemigosX = 0
                 muertes += 1
                 self.zelda_vidas -= muertes
 

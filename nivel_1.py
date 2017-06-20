@@ -50,7 +50,7 @@ class nivel1(zelda.Zelda):
         # self.cajas.append(pygame.Rect(2240, 390, 70, 70))
         self.cajas.append(pygame.Rect(2380, 390, 70, 70))
         self.cajas.append(pygame.Rect(2450, 390, 70, 70))
-        self.cajas.append(pygame.Rect(3150, 250, 70, 70))
+        # self.cajas.append(pygame.Rect(3150, 250, 70, 70))
         self.cajas.append(pygame.Rect(3150, 180, 70, 70))
         self.cajas.append(pygame.Rect(3850, 390, 70, 70))
         self.cajas.append(pygame.Rect(5250, 0, 70*5, 70*9))
@@ -59,7 +59,7 @@ class nivel1(zelda.Zelda):
         self.espinas = []
         self.espinas.append(pygame.Rect(985, 499 ,57 ,33))
         self.espinas.append(pygame.Rect(1685, 499 ,57 ,33))
-        self.espinas.append(pygame.Rect(3230, 499 ,57 ,33))
+        self.espinas.append(pygame.Rect(3160, 499 ,57 ,33))
         self.espinas.append(pygame.Rect(3430, 499 ,57 ,33))
         self.espinas.append(pygame.Rect(3655, 80 ,105 ,33))
         self.espinas.append(pygame.Rect(4330, 285 ,47 ,33))
